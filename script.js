@@ -24,7 +24,28 @@ const generateRandomSudoku = () => {
     return grid;  // Retourner la grille modifiée avec des cases vides
 };
 
-// Fonction pour afficher la grille (comme avant)
+// Fonction pour vérifier si une valeur peut être placée à une position donnée
+const isValueValid = (grid, row, col, num) => {
+    // Vérifier la ligne
+    for (let i = 0; i < 9; i++) {
+        if (grid[row][i] === num) return false;
+    }
+    // Vérifier la colonne
+    for (let i = 0; i < 9; i++) {
+        if (grid[i][col] === num) return false;
+    }
+    // Vérifier la sous-grille 3x3
+    const startRow = Math.floor(row / 3) * 3;
+    const startCol = Math.floor(col / 3) * 3;
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (grid[startRow + i][startCol + j] === num) return false;
+        }
+    }
+    return true;  // Si aucune violation n'est trouvée
+};
+
+// Fonction pour créer la grille avec des entrées interactives
 const createSudokuGrid = (grid) => {
     const table = document.getElementById('sudoku-grid');
     table.innerHTML = '';  // Réinitialiser le tableau à chaque fois
@@ -44,51 +65,24 @@ const createSudokuGrid = (grid) => {
             // Désactiver les cases déjà remplies
             if (value !== 0) {
                 input.disabled = true;
+            } else {
+                // Ajouter un gestionnaire d'événements pour valider la valeur entrée
+                input.addEventListener('input', (e) => {
+                    const enteredValue = parseInt(e.target.value);
+                    if (isNaN(enteredValue) || !isValueValid(grid, row, col, enteredValue)) {
+                        e.target.setCustomValidity("Valeur invalide dans cette case !");
+                        e.target.reportValidity();
+                    } else {
+                        e.target.setCustomValidity(""); // Réinitialiser la validation si la valeur est valide
+                        grid[row][col] = enteredValue;  // Mettre à jour la grille avec la valeur saisie
+                    }
+                });
             }
 
             td.appendChild(input);
             tr.appendChild(td);
         }
         table.appendChild(tr);
-    }
-};
-
-// Fonction pour vérifier si le Sudoku est résolu
-const checkSudoku = () => {
-    const inputs = document.querySelectorAll('input');
-    const grid = [];
-
-    // Remplir la grille avec les valeurs saisies
-    for (let i = 0; i < inputs.length; i++) {
-        const row = Math.floor(i / 9);
-        const col = i % 9;
-        const value = inputs[i].value ? parseInt(inputs[i].value) : 0;
-
-        if (!grid[row]) grid[row] = [];
-        grid[row][col] = value;
-    }
-
-    let isValid = true;
-
-    // Vérification des lignes, colonnes et sous-grilles
-    for (let i = 0; i < 9; i++) {
-        const rowSet = new Set();
-        const colSet = new Set();
-        const blockSet = new Set();
-        for (let j = 0; j < 9; j++) {
-            rowSet.add(grid[i][j]);
-            colSet.add(grid[j][i]);
-            blockSet.add(grid[Math.floor(i / 3) * 3 + Math.floor(j / 3)][(i % 3) * 3 + j % 3]);
-        }
-        if (rowSet.size !== 9 || colSet.size !== 9 || blockSet.size !== 9) {
-            isValid = false;
-        }
-    }
-
-    if (isValid) {
-        alert('Bravo ! Vous avez résolu le Sudoku !');
-    } else {
-        alert('La solution est incorrecte. Essayez encore.');
     }
 };
 
@@ -106,23 +100,7 @@ const solveSudoku = (grid) => {
     };
 
     const isValid = (row, col, num) => {
-        // Vérifier la ligne
-        for (let i = 0; i < 9; i++) {
-            if (grid[row][i] === num) return false;
-        }
-        // Vérifier la colonne
-        for (let i = 0; i < 9; i++) {
-            if (grid[i][col] === num) return false;
-        }
-        // Vérifier la sous-grille 3x3
-        const startRow = Math.floor(row / 3) * 3;
-        const startCol = Math.floor(col / 3) * 3;
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                if (grid[startRow + i][startCol + j] === num) return false;
-            }
-        }
-        return true;
+        return isValueValid(grid, row, col, num);
     };
 
     const solve = () => {
@@ -151,10 +129,10 @@ let grid = generateRandomSudoku();
 createSudokuGrid(grid);
 
 // Gestion des événements
-document.getElementById('check-btn').addEventListener('click', checkSudoku);
+document.getElementById('check-btn').addEventListener('click', () => {
+    alert("La validation complète n'est pas encore implémentée !");
+});
 document.getElementById('solve-btn').addEventListener('click', () => solveSudoku(grid));
-
-// Nouveau bouton pour générer une nouvelle grille
 document.getElementById('new-grid-btn').addEventListener('click', () => {
     grid = generateRandomSudoku();  // Générer une nouvelle grille aléatoire
     createSudokuGrid(grid);  // Afficher la nouvelle grille
