@@ -29,7 +29,7 @@ Flower est un projet web conçu pour jouer au sudoku dans un theme bien a lui.
 
 ## Accéder au dépôt
 
-Retrouvez ce projet sur GitHub : [Flower](https://github.com/lololepro17/Flower).
+Retrouvez ce projet sur GitHub : [Flower](https://lololepro17.github.io/Flower/).
 
 ---
 
