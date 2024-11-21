@@ -13,14 +13,16 @@ body {
     font-family: 'Arial', sans-serif;
     text-align: center;
     position: relative;
+    height: 100vh; /* Assure que le body occupe toute la hauteur de la fenêtre */
 }
 
+/* Titre principal */
 h1 {
     color: #ff69b4;
     font-size: 36px;
     margin-top: 20px;
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    z-index: 1; /* S'assurer que le titre reste au-dessus */
+    z-index: 1; /* S'assurer que le titre reste au-dessus de l'animation */
 }
 
 /* Grille de Sudoku */
@@ -29,6 +31,7 @@ h1 {
     justify-content: center;
     margin-top: 20px;
     z-index: 1;
+    position: relative; /* S'assurer que la grille reste visible */
 }
 
 table {
@@ -111,7 +114,6 @@ button:hover {
     }
 }
 
-
 /* Cercles animés */
 #animated-background {
     position: absolute;
@@ -123,7 +125,7 @@ button:hover {
     overflow: hidden;
 }
 
-/* Animations pour les cercles */
+/* Générer des cercles animés */
 .circle {
     position: absolute;
     border-radius: 50%;
@@ -131,6 +133,7 @@ button:hover {
     animation: moveCircle 10s infinite;
 }
 
+/* Animation des cercles */
 @keyframes moveCircle {
     0% {
         transform: translate(0, 0);
