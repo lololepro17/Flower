@@ -1,7 +1,7 @@
 
 # Flower
 
-Flower est un projet web conçu pour [décrire le but du projet ici, par exemple : une application de sudoku interactif].
+Flower est un projet web conçu pour jouer au sudoku dans un theme bien a lui.
 
 ## Contenu
 
@@ -25,7 +25,7 @@ Flower est un projet web conçu pour [décrire le but du projet ici, par exemple
    ```bash
    git clone https://github.com/lololepro17/Flower.git
    ```
-2. [Ajoutez des instructions spécifiques à votre projet ici, par exemple : comment lancer l'application.]
+2. Ouvrer le fichier index.html
 
 ## Accéder au dépôt
 
