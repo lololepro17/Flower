@@ -162,3 +162,67 @@ document.getElementById('new-grid-btn').addEventListener('click', () => {
     grid = generateRandomSudoku();  // Générer une nouvelle grille aléatoire
     createSudokuGrid(grid);  // Afficher la nouvelle grille
 });
+
+
+// Créer des cercles animés dans l'arrière-plan
+const createAnimatedBackground = () => {
+    const background = document.getElementById('animated-background');
+
+    for (let i = 0; i < 10; i++) { // Créer 10 cercles animés
+        const circle = document.createElement('div');
+        circle.classList.add('circle');
+        background.appendChild(circle);
+        
+        // Définir des positions et vitesses aléatoires
+        const size = Math.random() * 50 + 30; // Taille entre 30px et 80px
+        const left = Math.random() * 100;
+        const top = Math.random() * 100;
+        const animationDuration = Math.random() * 4 + 4; // Durée de l'animation entre 4s et 8s
+
+        circle.style.width = `${size}px`;
+        circle.style.height = `${size}px`;
+        circle.style.left = `${left}vw`;
+        circle.style.top = `${top}vh`;
+        circle.style.animationDuration = `${animationDuration}s`;
+    }
+};
+
+// Ajouter du style pour les cercles animés
+const style = document.createElement('style');
+style.innerHTML = `
+    #animated-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 192, 203, 0.3); /* Couleur rose clair pour l'effet */
+        z-index: -1; /* L'animation sera derrière tout le contenu */
+        overflow: hidden;
+    }
+
+    .circle {
+        position: absolute;
+        border-radius: 50%;
+        background-color: rgba(255, 105, 180, 0.6); /* Couleur rose avec transparence */
+        animation: moveCircle 10s infinite;
+    }
+
+    @keyframes moveCircle {
+        0% {
+            transform: translate(0, 0);
+        }
+        50% {
+            transform: translate(200px, 200px);
+        }
+        100% {
+            transform: translate(0, 0);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Appeler la fonction pour générer l'animation après le chargement complet du DOM
+document.addEventListener('DOMContentLoaded', () => {
+    createAnimatedBackground();
+});
