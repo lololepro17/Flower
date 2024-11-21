@@ -26,27 +26,49 @@ h1 {
 }
 
 /* Grille de Sudoku */
+
 .grid-container {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    z-index: 1;
-    position: relative; /* S'assurer que la grille reste visible */
+    justify-content: center;  /* Centre horizontalement */
+    align-items: center;      /* Centre verticalement */
+    height: 100vh;            /* Prend toute la hauteur de la fenêtre */
 }
-
-table {
-    border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 td {
     width: 50px;
     height: 50px;
     text-align: center;
-    border: 1px solid #ff69b4;
+    border: 1px solid #ff69b4; /* Bordure standard */
 }
 
+/* Séparation des blocs de 3x3 (verticaux) */
+td:nth-child(3n+1) {
+    border-left: 3px solid #ff69b4;  /* Bordure à gauche de chaque bloc */
+}
+
+td:nth-child(3n) {
+    border-right: 3px solid #ff69b4; /* Bordure à droite de chaque bloc */
+}
+
+/* Séparation des blocs de 3x3 (horizontaux) */
+tr:nth-child(3n+1) td {
+    border-top: 3px solid #ff69b4;   /* Bordure au-dessus de chaque bloc */
+}
+
+tr:nth-child(3n) td {
+    border-bottom: 3px solid #ff69b4; /* Bordure en dessous de chaque bloc */
+}
+
+
+/* Séparation par couleur de fond */
+td:nth-child(3n+1),
+td:nth-child(3n),
+td:nth-of-type(3n+1),
+td:nth-of-type(6n+3) {
+    background-color: rgba(255, 105, 180, 0.2);  /* Fond rose transparent */
+}
+
+
+/* Input */
 input {
     width: 40px;
     height: 40px;
@@ -111,37 +133,5 @@ button:hover {
     button {
         width: 90%;
         font-size: 14px;
-    }
-}
-
-/* Cercles animés */
-#animated-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* L'animation sera derrière tout le contenu */
-    overflow: hidden;
-}
-
-/* Générer des cercles animés */
-.circle {
-    position: absolute;
-    border-radius: 50%;
-    background-color: rgba(255, 105, 180, 0.6); /* Couleur rose avec transparence */
-    animation: moveCircle 10s infinite;
-}
-
-/* Animation des cercles */
-@keyframes moveCircle {
-    0% {
-        transform: translate(0, 0);
-    }
-    50% {
-        transform: translate(200px, 200px);
-    }
-    100% {
-        transform: translate(0, 0);
     }
 }
